@@ -1,3 +1,4 @@
+.vs/**
 src/**/bower_components/**
 src/**/bin
 src/**/obj
