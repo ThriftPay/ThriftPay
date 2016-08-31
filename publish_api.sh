@@ -2,7 +2,6 @@
 
 # publish
 supervisorctl stop api.thriftpay.co
-cd src/ThriftPay.API
 cd src/ThriftPay.Core
 dotnet restore
 cd ../ThriftPay.API

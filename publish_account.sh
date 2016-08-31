@@ -2,7 +2,6 @@
 
 # publish
 supervisorctl stop account.thriftpay.co
-cd src/ThriftPay.Account
 cd src/ThriftPay.Core
 dotnet restore
 cd ../ThriftPay.Account
