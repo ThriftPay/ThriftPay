@@ -1,0 +1,18 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5432;Database=thriftpay;Pooling=true;"
+  },
+  "OpenIdConnectOptions": {
+    "ClientId": "resource_server",
+    "ClientSecret": "secret_secret_secret",
+    "Authority": "http://localhost:5000/"
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}
