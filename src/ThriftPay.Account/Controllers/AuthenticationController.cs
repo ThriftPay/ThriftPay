@@ -35,7 +35,7 @@ namespace ThriftPay.Account.Controllers
                 var user = await _userManager.FindByNameAsync(request.Username);
                 if (user == null)
                 {
-                    return Json(new OpenIdConnectResponse
+                    return BadRequest(new OpenIdConnectResponse
                     {
                         Error = OpenIdConnectConstants.Errors.InvalidGrant
                     });
@@ -49,7 +49,7 @@ namespace ThriftPay.Account.Controllers
                         await _userManager.AccessFailedAsync(user);
                     }
 
-                    return Json(new OpenIdConnectResponse
+                    return BadRequest(new OpenIdConnectResponse
                     {
                         Error = OpenIdConnectConstants.Errors.InvalidGrant
                     });
@@ -73,8 +73,8 @@ namespace ThriftPay.Account.Controllers
 
                 return SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
             }
-
-            return Json(new OpenIdConnectResponse
+            
+            return BadRequest(new OpenIdConnectResponse
             {
                 Error = OpenIdConnectConstants.Errors.UnsupportedGrantType
             });
