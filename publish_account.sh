@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # publish
-cd src/ThriftPay.Account
 supervisorctl stop account.thriftpay.co
+cd src/ThriftPay.Account
+cd src/ThriftPay.Core
+dotnet restore
+cd ../ThriftPay.Account
 dotnet restore
 dotnet publish -r coreclr -o /var/www/aspnet/ThriftPay.Account
-supervisorctl start account.thriftpay.co
 cd ../../
+supervisorctl start account.thriftpay.co
