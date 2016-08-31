@@ -180,15 +180,13 @@ namespace ThriftPay.Account
                         Type = OpenIddictConstants.ClientTypes.Confidential
                     });
 
-                    /*context.Applications.Add(new OpenIddictApplication<Guid>
+                    context.Applications.Add(new OpenIddictApplication<Guid>
                     {
-                        ClientId = "myClient",
+                        ClientId = "android",
                         ClientSecret = Crypto.HashPassword("secret_secret_secret"),
-                        DisplayName = "My client application",
-                        LogoutRedirectUri = "http://localhost:5002/",
-                        RedirectUri = "http://localhost:5002/signin-oidc",
-                        Type = OpenIddictConstants.ClientTypes.Confidential
-                    });*/
+                        DisplayName = "Android application",
+                        Type = OpenIddictConstants.ClientTypes.Public
+                    });
 
                     // To test this sample with Postman, use the following settings:
                     // 
