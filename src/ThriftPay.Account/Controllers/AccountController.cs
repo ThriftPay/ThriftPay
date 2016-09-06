@@ -11,6 +11,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ThriftPay.Account.Models;
 using ThriftPay.Account.ViewModels.Account;
+using ThriftPay.Account.ViewModels.Mappers;
+using ThriftPay.Account.ViewModels.Shared;
 using ThriftPay.Core.Services.Email;
 using ThriftPay.Core.Services.Sms;
 
@@ -32,7 +34,7 @@ namespace ThriftPay.Account.Controllers
             SignInManager<ApplicationUser> signInManager,
             EmailSender emailSender,
             SmsSender smsSender,
-            ApplicationDbContext applicationDbContext, 
+            ApplicationDbContext applicationDbContext,
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
@@ -41,6 +43,47 @@ namespace ThriftPay.Account.Controllers
             _smsSender = smsSender;
             _applicationDbContext = applicationDbContext;
             _logger = loggerFactory.CreateLogger<AccountController>();
+        }
+
+        [AllowAnonymous, HttpPost, Route("signup")]
+        public async Task<IActionResult> Signup([FromBody]SignupViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (var dbTransaction = _applicationDbContext.Database.BeginTransaction())
+                    {
+                        var user = new ApplicationUser()
+                        {
+                            UserName = model.Username
+                        };
+
+                        var result = await _userManager.CreateAsync(user, model.Password);
+
+                        if (result.Succeeded)
+                        {
+                            dbTransaction.Commit();
+
+                            return Ok(user.ToViewModel());
+                        }
+                        else
+                        {
+                            dbTransaction.Rollback();
+
+                            return BadRequest(new ErrorViewModel() { Error = ErrorCode.ModelError, ErrorDescription = result.Errors.FirstOrDefault().Description });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+
+                    return BadRequest(new ErrorViewModel { Error = ErrorCode.ServerError, ErrorDescription = ex.Message });
+                }
+            }
+
+            return BadRequest(new ErrorViewModel() { Error = ErrorCode.ModelError, ErrorDescription = ModelState.FirstOrDefault().Value.Errors.FirstOrDefault().ErrorMessage });
         }
 
         //
