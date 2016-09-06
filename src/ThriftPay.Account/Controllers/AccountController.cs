@@ -45,7 +45,7 @@ namespace ThriftPay.Account.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
-        [AllowAnonymous, HttpPost, Route("signup")]
+        [AllowAnonymous, HttpPost, Route("account/signup")]
         public async Task<IActionResult> Signup([FromBody]SignupViewModel model)
         {
             if (ModelState.IsValid)
