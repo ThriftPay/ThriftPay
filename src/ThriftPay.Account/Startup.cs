@@ -75,6 +75,7 @@ namespace ThriftPay.Account
                 .AllowRefreshTokenFlow()
                 .AllowClientCredentialsFlow()
                 .AllowPasswordFlow()
+                .SetAccessTokenLifetime(TimeSpan.FromSeconds(45))
 
                 // During development, you can disable the HTTPS requirement.
                 .DisableHttpsRequirement()
